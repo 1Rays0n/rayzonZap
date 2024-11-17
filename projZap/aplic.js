@@ -25,6 +25,7 @@ function start(client) {
     // Função para criar um atraso nas resposta
     const atraso = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+    //Loop para iteração com vetores de mensagens resposta
     for (let index = 0; index < txtResposta.length; index++) {
         
         await client

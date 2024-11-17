@@ -26,9 +26,9 @@ function verEtapAtendimento (tokenCliente, nome, msg)
         };
         return mensagensRecebidas[tokenCliente].etapaDoAtendimento;
     };
-    if(mensagensRecebidas[tokenCliente].contIteracoes == 0)
+    if(mensagensRecebidas[tokenCliente].contIteracoes == 0)//Verifica se está na primeira iteração
     {
-        valideRespotas(tokenCliente,msg);
+        valideRespotas(tokenCliente,msg);//Avalia e responde de acordo
         return mensagensRecebidas[tokenCliente].etapaDoAtendimento;
     }
     return mensagensRecebidas[tokenCliente].etapaDoAtendimento;   
@@ -40,7 +40,7 @@ function valideRespotas (tokenCliente, msg){
         console.error("Cliente não encontrado!");
         return;
     }        
-    switch (msg)
+    switch (msg)//Valida o retorno do cliente e insere na posição adequada
     {
         case "1":
             mensagensRecebidas[tokenCliente].etapaDoAtendimento = "vendas"                       
