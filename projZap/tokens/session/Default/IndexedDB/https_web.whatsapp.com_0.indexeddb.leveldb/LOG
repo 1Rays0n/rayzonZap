@@ -1,0 +1,26 @@
+2024/11/17-19:02:36.595 1809e Reusing MANIFEST /home/rays0n/Documentos/Meus Projetos/Raysonzap/projZap/tokens/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/11/17-19:02:36.596 1809e Recovering log #299
+2024/11/17-19:02:36.602 1809e Reusing old log /home/rays0n/Documentos/Meus Projetos/Raysonzap/projZap/tokens/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000299.log 
+2024/11/17-19:02:37.634 180a0 Level-0 table #305: started
+2024/11/17-19:02:37.639 180a0 Level-0 table #305: 280519 bytes OK
+2024/11/17-19:02:37.643 180a0 Delete type=0 #299
+2024/11/17-19:02:37.643 180a9 Manual compaction at level-0 from '\x00`\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00a\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/11/17-19:02:37.665 180a0 Compacting 1@1 + 2@2 files
+2024/11/17-19:02:37.700 180a0 Generated table #306@1: 63490 keys, 2231862 bytes
+2024/11/17-19:02:37.717 180a0 Generated table #307@1: 23385 keys, 904342 bytes
+2024/11/17-19:02:37.717 180a0 Compacted 1@1 + 2@2 files => 3136204 bytes
+2024/11/17-19:02:37.721 180a0 compacted to: files[ 0 0 2 0 0 0 0 ]
+2024/11/17-19:02:37.721 180a0 Delete type=2 #302
+2024/11/17-19:02:37.721 180a0 Delete type=2 #301
+2024/11/17-19:02:37.721 180a0 Delete type=2 #305
+2024/11/17-19:04:51.309 1809f Level-0 table #309: started
+2024/11/17-19:04:51.331 1809f Level-0 table #309: 1255293 bytes OK
+2024/11/17-19:04:51.336 1809f Delete type=0 #304
+2024/11/17-19:04:52.158 1809f Compacting 1@1 + 2@2 files
+2024/11/17-19:04:52.212 1809f Generated table #310@1: 65524 keys, 2236211 bytes
+2024/11/17-19:04:52.232 1809f Generated table #311@1: 26095 keys, 1071993 bytes
+2024/11/17-19:04:52.232 1809f Compacted 1@1 + 2@2 files => 3308204 bytes
+2024/11/17-19:04:52.236 1809f compacted to: files[ 0 0 2 0 0 0 0 ]
+2024/11/17-19:04:52.236 1809f Delete type=2 #309
+2024/11/17-19:04:52.236 1809f Delete type=2 #306
+2024/11/17-19:04:52.236 1809f Delete type=2 #307
