@@ -26,7 +26,8 @@ function verEtapAtendimento (tokenCliente, nome, msg)
         };
         return mensagensRecebidas[tokenCliente].etapaDoAtendimento;
     };
-    if(mensagensRecebidas[tokenCliente].contIteracoes == 0)//Verifica se está na primeira iteração
+    if(mensagensRecebidas[tokenCliente].contIteracoes == 0 
+        || mensagensRecebidas[tokenCliente].etapaDoAtendimento == "opcaoinvalida")//Verifica se está na primeira iteração
     {
         valideRespotas(tokenCliente,msg);//Avalia e responde de acordo
         return mensagensRecebidas[tokenCliente].etapaDoAtendimento;
@@ -35,27 +36,48 @@ function verEtapAtendimento (tokenCliente, nome, msg)
 }
 
 function valideRespotas (tokenCliente, msg){
+    const antes = mensagensRecebidas[tokenCliente].etapaDoAtendimento;
     if (!mensagensRecebidas[tokenCliente])
     {
-        console.error("Cliente não encontrado!");
+        console.error("\n\nCliente não encontrado!\n\n");
         return;
     }        
     switch (msg)//Valida o retorno do cliente e insere na posição adequada
     {
         case "1":
-            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "vendas"                       
+            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "vendas";
+            if(antes != "vendas")
+                {
+                    mensagensRecebidas[tokenCliente].contIteracoes = 0;
+                }                     
             break;
         case "2":
-            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "cobranca";            
+            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "cobranca";
+            if(antes != "cobranca")
+                {
+                    mensagensRecebidas[tokenCliente].contIteracoes = 0;
+                }         
             break;
         case "3":
-            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "naturys";            
+            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "naturys";
+            if(antes != "naturys")
+                {
+                    mensagensRecebidas[tokenCliente].contIteracoes = 0;
+                }        
             break; 
         case "4":
-            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "outrosassuntos";            
+            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "outrosassuntos";
+            if(antes != "outrosassuntos")
+                {
+                    mensagensRecebidas[tokenCliente].contIteracoes = 0;
+                }            
             break; 
         default:
-            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "opcaoinvalida";            
+            mensagensRecebidas[tokenCliente].etapaDoAtendimento = "opcaoinvalida";
+            if(antes != "outrosassuntos")
+                {
+                    mensagensRecebidas[tokenCliente].contIteracoes = 0;
+                }          
             break;
     }
         

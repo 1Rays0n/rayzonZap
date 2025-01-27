@@ -12,7 +12,7 @@ wppconnect
 function start(client) {
   client.onMessage(async (message) => {
     
-    if(message.isGroupMsg == true )
+    if(message.isGroupMsg == true || message.chatId == "status@broadcast")
     {
       return;
     }
@@ -28,6 +28,7 @@ function start(client) {
     //Loop para iteração com vetores de mensagens resposta
     for (let index = 0; index < txtResposta.length; index++) {
         
+      await atraso(1800);
         await client
           .sendText(message.from, txtResposta[index])
           .then((result) => {
@@ -36,7 +37,6 @@ function start(client) {
           .catch((erro) => {
             console.error('Error when sending: ', erro); //return object error
           });
-          await atraso(1800);
     }
   });
 }

@@ -74,7 +74,7 @@ const { mensagensRecebidas } = require("./etapa");
             "descricao": "opção inválida",
             "funcResposta": function respostas(tokenCliente,nome)
             {                
-                if (mensagensRecebidas[tokenCliente].contIteracoes >2)
+                if (mensagensRecebidas[tokenCliente].contIteracoes >1)
                 {
                     delete mensagensRecebidas[tokenCliente];
                     return ["Vish... o negócio está baldeado 🤦‍♂️"];
