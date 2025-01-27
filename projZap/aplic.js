@@ -37,6 +37,7 @@ function start(client) {
           .catch((erro) => {
             console.error('Error when sending: ', erro); //return object error
           });
+      await atraso(200);
     }
   });
 }
