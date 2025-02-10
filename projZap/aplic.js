@@ -11,6 +11,8 @@ wppconnect
 
 function start(client) {
   client.onMessage(async (message) => {
+
+    console.log(message);
     
     if (message.isGroupMsg || message.chatId === "status@broadcast") {
       return;
@@ -29,7 +31,7 @@ function start(client) {
 
     try {
       const enviarMensagemDe = verEtapAtendimento(sender, message.notifyName, message.content);
-      const txtResposta = respostas[enviarMensagemDe].funcResposta(sender, message.sender.name);
+      const txtResposta = respostas[enviarMensagemDe].funcResposta(sender, message.notifyName);
 
       const atraso = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
