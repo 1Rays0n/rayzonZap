@@ -1,8 +1,8 @@
-// Supports ES6
-// import { create, Whatsapp } from '@wppconnect-team/wppconnect';
 const wppconnect = require('@wppconnect-team/wppconnect');
 const { verEtapAtendimento, mensagensRecebidas } = require('./etapa');
 const { respostas } = require('./respostas');
+
+let processingMessages = {}; // Objeto para rastrear mensagens por contato
 
 wppconnect
   .create()
@@ -12,32 +12,40 @@ wppconnect
 function start(client) {
   client.onMessage(async (message) => {
     
-    if(message.isGroupMsg == true || message.chatId == "status@broadcast")
-    {
+    if (message.isGroupMsg || message.chatId === "status@broadcast") {
       return;
     }
 
-    //Verifica em que momento a conversa esta
-    const enviarMensagemDe = verEtapAtendimento(message.from,message.notifyName,message.content);
-    //Pega o estado e salva na variavel
-    const txtResposta = respostas[enviarMensagemDe].funcResposta(message.from,message.sender.name);
+    const sender = message.from;
 
-    // Função para criar um atraso nas resposta
-    const atraso = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    // Se já estiver processando uma mensagem para esse contato, ignore
+    if (processingMessages[sender]) {
+      console.log(`Ignorando mensagem de ${sender}, ainda processando a anterior.`);
+      return;
+    }
 
-    //Loop para iteração com vetores de mensagens resposta
-    for (let index = 0; index < txtResposta.length; index++) {
-        
-      await atraso(1800);
+    // Marca como em processamento
+    processingMessages[sender] = true;
+
+    try {
+      const enviarMensagemDe = verEtapAtendimento(sender, message.notifyName, message.content);
+      const txtResposta = respostas[enviarMensagemDe].funcResposta(sender, message.sender.name);
+
+      const atraso = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      for (let index = 0; index < txtResposta.length; index++) {
+        await atraso(1800);
         await client
-          .sendText(message.from, txtResposta[index])
-          .then((result) => {
-            console.log('Result: ', result); //return object success
-          })
-          .catch((erro) => {
-            console.error('Error when sending: ', erro); //return object error
-          });
-      await atraso(200);
+          .sendText(sender, txtResposta[index])
+          .then((result) => console.log('Enviado:', result))
+          .catch((erro) => console.error('Erro ao enviar:', erro));
+        await atraso(200);
+      }
+    } catch (error) {
+      console.error('Erro no processamento da mensagem:', error);
+    } finally {
+      // Libera o processamento para novas mensagens desse contato
+      delete processingMessages[sender];
     }
   });
 }
