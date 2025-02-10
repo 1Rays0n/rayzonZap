@@ -6,10 +6,10 @@ const { mensagensRecebidas } = require("./etapa");
         "boasVindas":
         {
             "descrição": "Função com texto boas vindas e ações",
-            "funcResposta": function respostas(tokenCliente)
+            "funcResposta": function respostas(tokenCliente, nome)
                 {
                     mensagensRecebidas[tokenCliente].etapaDoAtendimento = "opcaoinvalida";
-                    return ["Oi!\nVocê mandou mensagem para o WhatsApp do Rayson.👋","Por favor digite uma das opções abaixo para continuar nossa conversa:\n\n\n1 - Se você deseja me vender alguma coisa \n2 - Se você esta aqui por que acredita que eu lhe devo algo \n3 - Se for um colaborador Naturys \n4 - Nenhuma das anteriores"];
+                    return [`Olá ${nome}!\nSeja bem vindo(a) ao meu zap.👋`,"Por favor digite uma das opções abaixo para continuar nossa conversa:\n\n\n1 - Se você deseja me vender alguma coisa \n2 - Se você esta aqui por que acredita que eu lhe devo algo \n3 - Se for um colaborador Naturys \n4 - Nenhuma das anteriores"];
                 }
         },
         "vendas":

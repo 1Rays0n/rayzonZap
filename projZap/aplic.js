@@ -12,7 +12,10 @@ wppconnect
 function start(client) {
   client.onMessage(async (message) => {
     
-    if (message.isGroupMsg || message.chatId === "status@broadcast") {
+    if (message.isGroupMsg || 
+        message.chatId === "status@broadcast" || 
+        message.from == "552140428252@c.us")
+      {
       return;
     }
     
@@ -20,7 +23,7 @@ function start(client) {
     
     // Se já estiver processando uma mensagem para esse contato, ignore
     if (processingMessages[fonteContato]) {
-      console.log(`Ignorando mensagem de ${fonteContato}, ainda processando a anterior.`);
+      console.log(`\n\nIgnorando mensagem de ${fonteContato}, ainda processando a anterior.\n\n`);
       return;
     }
     
@@ -28,8 +31,8 @@ function start(client) {
     processingMessages[fonteContato] = true;
     
     try {
-      const enviarMensagemDe = verEtapAtendimento(fonteContato, message.sender.formattedName, message.content);
-      const txtResposta = respostas[enviarMensagemDe].funcResposta(fonteContato, message.sender.formattedName);
+      const enviarMensagemDe = verEtapAtendimento(fonteContato, message.notifyName, message.content);
+      const txtResposta = respostas[enviarMensagemDe].funcResposta(fonteContato, message.notifyName);
       
       const atraso = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
       
