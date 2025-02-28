@@ -1,6 +1,8 @@
 const wppconnect = require('@wppconnect-team/wppconnect');
 const { verEtapAtendimento, mensagensRecebidas } = require('./etapa');
 const { respostas } = require('./respostas');
+const { conectarBancoDados } = require('./database');
+const { enviarMsgBD, verificarNumeroExcluido } = require('./enviarMsgBD');
 
 let processingMessages = {}; // Objeto para rastrear mensagens por contato
 
@@ -15,10 +17,21 @@ function start(client) {
     if (message.isGroupMsg || 
         message.chatId === "status@broadcast" || 
         message.from == "552140428252@c.us")
-      {
+        {
       return;
     }
-    
+
+    //Enviar dados para BD
+    conectarBancoDados();
+    enviarMsgBD(message);
+
+    // Verifica se o número está na lista de excluídos após salvar a mensagem
+    const numeroExcluido = await verificarNumeroExcluido(message.from);
+    if (numeroExcluido) {
+      console.log(`Número ${message.from} está na lista de excluídos. Mensagem ignorada.`);
+      return;
+    }
+
     const fonteContato = message.from;
     
     // Se já estiver processando uma mensagem para esse contato, ignore
@@ -32,7 +45,7 @@ function start(client) {
     
     try {
       const enviarMensagemDe = verEtapAtendimento(fonteContato, message.notifyName, message.content);
-      const txtResposta = respostas[enviarMensagemDe].funcResposta(fonteContato, message.notifyName);
+      const txtResposta = await respostas[enviarMensagemDe].funcResposta(fonteContato, message.notifyName, message);
       
       const atraso = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
       
@@ -53,3 +66,4 @@ function start(client) {
     console.log(message);
   });
 }
+

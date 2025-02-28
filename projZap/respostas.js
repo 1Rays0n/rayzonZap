@@ -1,4 +1,5 @@
 const { mensagensRecebidas } = require("./etapa");
+const { adicionarNumeroExcluido } = require("./enviarMsgBD");
 
     
     const respostas = 
@@ -6,7 +7,7 @@ const { mensagensRecebidas } = require("./etapa");
         "boasVindas":
         {
             "descrição": "Função com texto boas vindas e ações",
-            "funcResposta": function respostas(tokenCliente, nome)
+            "funcResposta": function respostas(tokenCliente, nome, message)
                 {
                     mensagensRecebidas[tokenCliente].etapaDoAtendimento = "opcaoinvalida";
                     return [`Olá ${nome}!\nSeja bem vindo(a) ao meu zap.👋`,"Por favor digite uma das opções abaixo para continuar nossa conversa:\n\n\n1 - Se você deseja me vender alguma coisa \n2 - Se você esta aqui por que acredita que eu lhe devo algo \n3 - Se for um colaborador Naturys \n4 - Nenhuma das anteriores"];
@@ -15,7 +16,7 @@ const { mensagensRecebidas } = require("./etapa");
         "vendas":
         {
             "descricao": "resposta para vendedores",
-            "funcResposta":function respostas(tokenCliente)
+            "funcResposta":function respostas(tokenCliente, nome, message)
             {
                 delete mensagensRecebidas[tokenCliente];
                 return ["Ok!","Peguei seu contato e vou analisar a oferta.\n Se a promoção valer a penas retorno em outro momento 😄","Tenha um ótimo dia e boas vendas!"];
@@ -24,7 +25,7 @@ const { mensagensRecebidas } = require("./etapa");
         "cobranca":
         {
             "descricao": "resposta para cobradores",
-            "funcResposta":function respostas(tokenCliente)
+            "funcResposta":function respostas(tokenCliente, nome, message)
             {
                 if (mensagensRecebidas[tokenCliente].contIteracoes == 0)
                 {
@@ -46,7 +47,7 @@ const { mensagensRecebidas } = require("./etapa");
         "naturys":
         {
             "descricao": "resposta para o pessoal da Naturys",
-            "funcResposta":function respostas(tokenCliente,nome)
+            "funcResposta":function respostas(tokenCliente, nome, message)
             {
                 if (mensagensRecebidas[tokenCliente].contIteracoes == 0)
                 {
@@ -63,16 +64,23 @@ const { mensagensRecebidas } = require("./etapa");
         "outrosassuntos":
         {
             "descricao": "outros assuntos",
-            "funcResposta":function respostas(tokenCliente)
-            {
-                delete mensagensRecebidas[tokenCliente];
-                return ["Dae meu povo!","Se tem outras coisas para conversar comigo me encontra no Telegram.\n\nAté breve 😎"];
+            "funcResposta": async function respostas(tokenCliente, nome, message) {
+                try {
+                    await adicionarNumeroExcluido(message);
+                    delete mensagensRecebidas[tokenCliente];
+                    return ["Entendi que você não deseja mais receber mensagens automáticas.", 
+                           "Seu número foi adicionado à lista de exclusão.",
+                           "Se precisar falar comigo, me encontre no Telegram.\n\nAté breve 😎"];
+                } catch (error) {
+                    console.error('Erro ao processar exclusão:', error);
+                    return ["Desculpe, ocorreu um erro ao processar sua solicitação."];
+                }
             }
         },
         "opcaoinvalida":
         {
             "descricao": "opção inválida",
-            "funcResposta": function respostas(tokenCliente,nome)
+            "funcResposta": function respostas(tokenCliente, nome, message)
             {                
                 if (mensagensRecebidas[tokenCliente].contIteracoes >1)
                 {
