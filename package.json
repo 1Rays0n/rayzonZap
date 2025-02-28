@@ -1,5 +1,13 @@
 {
+  "name": "whatsapp-bot",
+  "version": "1.0.0",
+  "description": "Bot de WhatsApp com MongoDB",
+  "main": "aplic.js",
+  "scripts": {
+    "start": "node aplic.js"
+  },
   "dependencies": {
-    "@wppconnect-team/wppconnect": "^1.35.2"
+    "@wppconnect-team/wppconnect": "^1.35.2",
+    "mongoose": "^7.6.8"
   }
 }

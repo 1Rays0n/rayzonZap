@@ -2,31 +2,28 @@ const mongoose = require('mongoose');
 
 async function conectarBancoDados() {
     try {
-        // Configurações de conexão
-        const mongoConfig = {
-            host: '0.0.0.0', // IP privado do servidor AWS
-            port: '0000',        // Porta exposta pelo Docker
-            dbName: 'meuBanco'       // Nome do banco de dados
-        };
+        // String de conexão direta
+        const mongoURI = 'mongodb://mngdb-cntnr:27017/zapdb';
+        // ou tente com localhost:
+        // const mongoURI = 'mongodb://localhost:18018/zapdb';
 
-        // String de conexão
-        const mongoURI = `mongodb://${mongoConfig.host}:${mongoConfig.port}/${mongoConfig.dbName}`;
-
-        // Opções de conexão
+        // Opções de conexão com timeouts reduzidos
         const options = {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 5000, // Timeout após 5 segundos
-            // Se precisar de autenticação, adicione as credenciais aqui
-            // user: 'seu_usuario',
-            // pass: 'sua_senha'
+            serverSelectionTimeoutMS: 5000,  // Reduzido para 5 segundos
+            connectTimeoutMS: 5000,          // Reduzido para 5 segundos
+            socketTimeoutMS: 5000            // Reduzido para 5 segundos
         };
 
         await mongoose.connect(mongoURI, options);
         console.log("\n+ + + + + + \nConectado ao MongoDB no Docker\n+ + + + + + \n");
     } catch (error) {
         console.log("Erro ao conectar ao MongoDB: ", error);
+        // Log mais detalhado do erro
+        console.log("Detalhes do erro:", error.message);
     }
 }
 
 module.exports = { conectarBancoDados };
+
