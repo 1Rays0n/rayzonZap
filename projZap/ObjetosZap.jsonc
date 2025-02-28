@@ -1,7 +1,0 @@
-{
-    // Aqui pode ter comentários
-    "chave": "valor",
-    /* E comentários de 
-       múltiplas linhas */
-    "outraChave": "outroValor"
-} 
