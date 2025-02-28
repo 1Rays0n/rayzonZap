@@ -4,7 +4,7 @@ async function conectarBancoDados() {
     try {
         // Configurações de conexão
         const mongoConfig = {
-            host: '172.31.12.16', // IP privado do servidor AWS
+            host: '0.0.0.0', // IP privado do servidor AWS
             port: '18018',        // Porta exposta pelo Docker
             dbName: 'zapdb'       // Nome do banco de dados
         };
