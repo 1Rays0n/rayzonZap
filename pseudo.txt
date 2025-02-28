@@ -1,1 +1,28 @@
 1 - Verificar o estado
+
+mensagem:{
+    body: '.',
+    notifyName: 'pepaulons',
+      from: '558585419830@c.us',
+      sender: {
+    id: '558585419830@c.us',
+    name: 'Pai',
+    shortName: 'Pai',
+    pushname: 'pepaulons',
+    isBusiness: false,
+    isEnterprise: false,
+    formattedName: 'Pai',
+    isMyContact: true,
+    isUser: true,
+    isWAContact: true,
+    profilePicThumbObj: {
+      eurl: 'https://pps.whatsapp.net/v/t61.24694-24/180599879_728016645215890_305107143532122066_n.jpg?ccb=11-4&oh=01_Q5AaIBMXg7nwugD3y_z3X569_0-SStvJfKF3dqzEaDj1-U3F&oe=67CAB2FB&_nc_sid=5e03e0&_nc_cat=108',
+      id: '558585419830@c.us',
+      img: 'https://media-for2-2.cdn.whatsapp.net/v/t61.24694-24/180599879_728016645215890_305107143532122066_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5AaICmNaDYiDnTxB_QCe9q1HUKE-LPxdv8xyDbYXzQ94hyb&oe=67CAB2FB&_nc_sid=5e03e0&_nc_cat=108',
+      imgFull: 'https://media-for2-2.cdn.whatsapp.net/v/t61.24694-24/180599879_728016645215890_305107143532122066_n.jpg?ccb=11-4&oh=01_Q5AaIBMXg7nwugD3y_z3X569_0-SStvJfKF3dqzEaDj1-U3F&oe=67CAB2FB&_nc_sid=5e03e0&_nc_cat=108',
+      tag: '1652199886'
+    },
+
+
+
+}
