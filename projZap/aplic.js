@@ -1,10 +1,12 @@
 const wppconnect = require('@wppconnect-team/wppconnect');
 const { verEtapAtendimento, mensagensRecebidas } = require('./etapa');
 const { respostas } = require('./respostas');
-const { conectarBancoDados } = require('./database');
 const { enviarMsgBD, verificarNumeroExcluido } = require('./enviarMsgBD');
 
 let processingMessages = {}; // Objeto para rastrear mensagens por contato
+
+// Conecta ao banco uma única vez no início
+conectarBancoDados().catch(console.error);
 
 wppconnect
   .create()
@@ -13,27 +15,23 @@ wppconnect
 
 function start(client) {
   client.onMessage(async (message) => {
-    
+    // Verifica condições de exclusão rapidamente
     if (message.isGroupMsg || 
         message.chatId === "status@broadcast" || 
-        message.from == "552140428252@c.us")
-        {
-      return;
-    }
-
-    //Enviar dados para BD
-    conectarBancoDados();
-    enviarMsgBD(message);
-
-    // Verifica se o número está na lista de excluídos após salvar a mensagem
-    const numeroExcluido = await verificarNumeroExcluido(message.from);
-    if (numeroExcluido) {
-      console.log(`Número ${message.from} está na lista de excluídos. Mensagem ignorada.`);
+        message.from == "552140428252@c.us") {
       return;
     }
 
     const fonteContato = message.from;
     
+    // Salva mensagem em background sem aguardar
+    enviarMsgBD(message);
+
+    // Verifica cache de números excluídos
+    if (await verificarNumeroExcluido(fonteContato)) {
+      return;
+    }
+
     // Se já estiver processando uma mensagem para esse contato, ignore
     if (processingMessages[fonteContato]) {
       console.log(`\n\nIgnorando mensagem de ${fonteContato}, ainda processando a anterior.\n\n`);
