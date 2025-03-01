@@ -2,6 +2,7 @@ const wppconnect = require('@wppconnect-team/wppconnect');
 const { verEtapAtendimento, mensagensRecebidas } = require('./etapa');
 const { respostas } = require('./respostas');
 const { enviarMsgBD, verificarNumeroExcluido } = require('./enviarMsgBD');
+const { conectarBancoDados } = require('./database');
 
 let processingMessages = {}; // Objeto para rastrear mensagens por contato
 
